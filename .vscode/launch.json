@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "name": "soloapp (Flutter Edge)",
+            "program": "lib/main.dart",
+            "deviceId": "edge",
+            "request": "launch",
+            "type": "dart"
+        }
+    ]
+}
