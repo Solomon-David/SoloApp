@@ -19,12 +19,12 @@ class HomeLayout extends StatefulWidget {
 
 class _HomeLayoutState extends State<HomeLayout> {
   //current index
-  String _current = "/home";
+  String _current = "/calculator";
 
   //list of screens
   final Map<String, Widget> _screens = {
-    "/home": const HomeWidget(),
     "/calculator": CalculatorWidget(),
+    "/default": const HomeWidget(),
   };
 
   //list of routes
@@ -49,7 +49,7 @@ class _HomeLayoutState extends State<HomeLayout> {
         centerTitle: true,
       ),
       body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 100),
         child: _screens[_current],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -61,11 +61,11 @@ class _HomeLayoutState extends State<HomeLayout> {
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey[900],
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
             icon: Icon(Icons.calculate),
             label: "Calculator",
           ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
         ],
       ),
     );

@@ -10,6 +10,7 @@ class Button extends StatelessWidget {
   final Function() onClick;
   final String variety;
   final dynamic onLongClick;
+  final double? size;
 
   const Button({
     super.key,
@@ -18,47 +19,65 @@ class Button extends StatelessWidget {
     required this.onClick,
     this.onLongClick,
     required this.variety,
+    this.size = 24,
   });
 
   @override
   Widget build(BuildContext context) {
     late Widget result;
-    TextStyle style = TextStyle(fontSize: 24);
-    ButtonStyle buttonStyle = ButtonStyle(
+    TextStyle style = TextStyle(fontSize: size);
+    ButtonStyle numberButtonStyle = ButtonStyle(
       padding: WidgetStatePropertyAll<EdgeInsets>(
-        EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       ),
     );
+
+    ButtonStyle symbolButtonStyle = ButtonStyle(
+      padding: WidgetStatePropertyAll<EdgeInsets>(
+        EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      ),
+      shape: WidgetStatePropertyAll<StadiumBorder>(StadiumBorder()),
+    );
+
     switch (variety) {
       // for numbers
       case "numberButton":
-        result = TextButton(
-          onPressed: () {
-            onClick();
-          },
-          style: buttonStyle,
+        result = Center(
+          child: TextButton(
+            onPressed: () {
+              onClick();
+            },
+            style: numberButtonStyle,
 
-          child: Text(value, style: style.copyWith(color: Colors.blueGrey)),
+            child: Text(value, style: style.copyWith(color: Colors.blueGrey)),
+          ),
         );
         break;
 
       // for symbols
       case "symbolButton":
-        result = ElevatedButton(
-          onPressed: () {
-            onClick();
-          },
-          onLongPress: () {
-            if (onLongClick != null) {
-              onLongClick();
-            }
-          },
-          // style: buttonStyle,
-          child: Text(value, style: style.copyWith(color: primaryColor)),
+        result = Center(
+          child: ElevatedButton(
+            onPressed: () {
+              onClick();
+            },
+            onLongPress: () {
+              if (onLongClick != null) {
+                onLongClick();
+              }
+            },
+            style: symbolButtonStyle,
+            child: Tooltip(
+              message: value2,
+              verticalOffset: 32,
+              preferBelow: false,
+              child: Text(value, style: style.copyWith(color: primaryColor)),
+            ),
+          ),
         );
         break;
 
-      // for cancel button
+      // for equals-to button
 
       case "equalityButton":
         result = FilledButton(
@@ -67,7 +86,7 @@ class Button extends StatelessWidget {
           },
           style: ButtonStyle(
             padding: WidgetStatePropertyAll<EdgeInsets>(
-              EdgeInsets.only(left: 28, right: 28, top: 12, bottom: 12),
+              EdgeInsets.only(left: 28, right: 28),
             ),
 
             backgroundColor: WidgetStatePropertyAll<Color>(primaryColor),
